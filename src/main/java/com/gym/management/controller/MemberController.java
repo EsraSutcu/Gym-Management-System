@@ -6,17 +6,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.gym.management.entity.Member;
-import com.gym.management.repository.MemberRepository;
+import com.gym.management.service.MemberService;
 
 @Controller
 public class MemberController {
 
     @Autowired
-    private MemberRepository memberRepository;
+    private MemberService memberService;
 
     @GetMapping("/members")
     public String listMembers(Model model){
-        model.addAttribute("members", memberRepository.findAll());
+        model.addAttribute("members", memberService.getAllMembers());
         return "members";
     }
 
@@ -28,7 +28,24 @@ public class MemberController {
 
     @PostMapping("/save-member")
     public String saveMember(Member member){
-        memberRepository.save(member);
+        memberService.saveMember(member);
         return "redirect:/members";
     }
+    @GetMapping("/delete-member/{id}")
+    public String deleteMember(@PathVariable Long id){
+        memberService.deleteMember(id);
+        return "redirect:/members";
+    }
+    @GetMapping("/edit-member/{id}")
+    public String showEditForm(@PathVariable Long id, Model model){
+        Member member = memberService.getMemberById(id);
+        model.addAttribute("member", member);
+        return "edit-member";
+    }
+    @PostMapping("/update-member")
+    public String updateMember(Member member){
+        memberService.saveMember(member);
+        return "redirect:/members";
+    }
+    
 }
