@@ -14,17 +14,24 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    @GetMapping("/members")
-    public String listMembers(Model model){
-        model.addAttribute("members", memberService.getAllMembers());
-        return "members";
-    }
-
     @GetMapping("/add-member")
-    public String showForm(Model model){
-        model.addAttribute("member", new Member());
+    public String addMember(
+            @RequestParam(required = false) String day,
+            @RequestParam(required = false) String time,
+            Model model) {
+
+        Member member = new Member();
+
+        // Eğer schedule’dan gelirse doldur
+        if(day != null) member.setTrainingDay(day);
+        if(time != null) member.setTrainingTime(time);
+
+        model.addAttribute("member", member);
+
         return "add-member";
     }
+
+   
 
     @PostMapping("/save-member")
     public String saveMember(Member member){
@@ -46,6 +53,17 @@ public class MemberController {
     public String updateMember(Member member){
         memberService.saveMember(member);
         return "redirect:/members";
+    }
+
+    @GetMapping("/schedule")
+    public String schedule(Model model){
+        model.addAttribute("members", memberService.getAllMembers());
+        return "schedule";
+    }
+    @GetMapping("/members")
+    public String listMembers(Model model){
+        model.addAttribute("members", memberService.getAllMembers());
+        return "members";
     }
     
 }

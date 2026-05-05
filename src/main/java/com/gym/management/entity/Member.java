@@ -24,8 +24,10 @@ public class Member extends Person{
     private String membershipType;
     
     private String trainerName;
-    
+    private String trainingDay;
+    private String trainingTime;
     private Double monthlyFee;
+    
     public Member() {
     }
 
@@ -88,5 +90,20 @@ public class Member extends Person{
     @Override
     public String getRole() {
         return "Member";
+    }
+    public String getTrainingDay() {
+        return trainingDay;
+    }
+
+    public void setTrainingDay(String trainingDay) {
+        this.trainingDay = trainingDay;
+    }
+
+    public String getTrainingTime() {
+        return trainingTime;
+    }
+
+    public void setTrainingTime(String trainingTime) {
+        this.trainingTime = trainingTime;
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +21,8 @@
     <div class="card shadow p-4">
         <h2 class="mb-4 text-center">Add New Member</h2>
 
-        <form action="/save-member" method="post">
+        <!-- ⭐ önemli: th:object ekledik -->
+        <form action="/save-member" method="post" th:object="${member}">
 
             <div class="mb-3">
                 <label class="form-label">First Name</label>
@@ -55,6 +56,26 @@
             <div class="mb-3">
                 <label class="form-label">Trainer Name</label>
                 <input type="text" name="trainerName" class="form-control">
+            </div>
+
+            <!-- ⭐ BURASI GÜNCELLENDİ -->
+            <div class="mb-3">
+                <label class="form-label">Training Day</label>
+                <select name="trainingDay" class="form-select" th:value="${member.trainingDay}">
+                    <option>Monday</option>
+                    <option>Tuesday</option>
+                    <option>Wednesday</option>
+                    <option>Thursday</option>
+                    <option>Friday</option>
+                    <option>Saturday</option>
+                    <option>Sunday</option>
+                </select>
+            </div>
+
+            <!-- ⭐ BURASI GÜNCELLENDİ -->
+            <div class="mb-3">
+                <label class="form-label">Training Time</label>
+                <input type="time" name="trainingTime" class="form-control" th:value="${member.trainingTime}">
             </div>
 
             <div class="mb-3">
